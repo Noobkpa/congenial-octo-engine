@@ -145,7 +145,8 @@ function collectFromDOM() {
 		const dateText =
 			metaDiv?.querySelector("div:last-child")?.textContent?.trim() || "";
 		const date = dateText || new Date().toISOString().slice(0, 10);
-		const slug = date + "-" + genId("pl").slice(-4);
+		// Keep the source filename from SSR so update/delete operations address the real file.
+		const slug = card.getAttribute("data-place-slug") || `${date}-${genId("pl").slice(-4)}`;
 		result.push({
 			id: genId("pl"),
 			slug,
