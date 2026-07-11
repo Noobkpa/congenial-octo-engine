@@ -1,0 +1,154 @@
+---
+import { getCollection } from "astro:content";
+import AdminDashboard from "@/components/admin/AdminDashboard.svelte";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "后台管理";
+const description = "内容与站点管理入口";
+
+const posts = (await getCollection("posts")).filter((item) => !item.data.draft);
+const moments = (await getCollection("moments")).filter((item) => item.id !== "_cover");
+const albums = await getCollection("album");
+const friends = (await getCollection("friends")).filter((item) => item.data.enabled !== false);
+const bangumi = await getCollection("bangumi");
+const daohang = await getCollection("daohang");
+const notebooks = await getCollection("notebooks");
+const routines = await getCollection("routines");
+const places = (await getCollection("life")).filter((item) => item.id.startsWith("places/"));
+
+const metrics = [
+	{ label: "文章", value: posts.length, icon: "material-symbols:article-outline" },
+	{ label: "说说", value: moments.length, icon: "material-symbols:chat-bubble-outline" },
+	{ label: "相册", value: albums.length, icon: "material-symbols:photo-library" },
+	{ label: "友链", value: friends.length, icon: "material-symbols:diversity-3" },
+];
+
+const modules = [
+	{
+		title: "文章管理",
+		label: "撰写、编辑、发布",
+		href: "/admin/?view=write",
+		icon: "material-symbols:edit-note-outline",
+		count: posts.length,
+		tone: "green",
+	},
+	{
+		title: "说说动态",
+		label: "短内容与朋友圈封面",
+		href: "/moments/",
+		icon: "material-symbols:forum-outline",
+		count: moments.length,
+		tone: "blue",
+	},
+	{
+		title: "相册",
+		label: "照片集合与封面",
+		href: "/album/",
+		icon: "material-symbols:photo-album-outline",
+		count: albums.length,
+		tone: "amber",
+	},
+	{
+		title: "友链",
+		label: "站点链接与展示",
+		href: "/friends/",
+		icon: "material-symbols:link-rounded",
+		count: friends.length,
+		tone: "rose",
+	},
+	{
+		title: "站点配置",
+		label: "资料、主题、侧栏",
+		href: "/config/",
+		icon: "material-symbols:settings-outline",
+		tone: "slate",
+	},
+	{
+		title: "赞助页面",
+		label: "收款码与赞助者",
+		href: "/sponsor/",
+		icon: "material-symbols:volunteer-activism-outline",
+		tone: "violet",
+	},
+	{
+		title: "网址导航",
+		label: "工具收藏与项目入口",
+		href: "/projects/",
+		icon: "material-symbols:travel-explore",
+		count: daohang.length,
+		tone: "green",
+	},
+	{
+		title: "番组收藏",
+		label: "书影音游与音乐",
+		href: "/movies-games/",
+		icon: "material-symbols:movie-outline",
+		count: bangumi.length,
+		tone: "blue",
+	},
+	{
+		title: "笔记本",
+		label: "日记与随笔",
+		href: "/life/notebooks/",
+		icon: "material-symbols:menu-book-outline",
+		count: notebooks.length,
+		tone: "amber",
+	},
+	{
+		title: "日常规划",
+		label: "作息与打卡计划",
+		href: "/life/routines/",
+		icon: "material-symbols:checklist",
+		count: routines.length,
+		tone: "rose",
+	},
+	{
+		title: "足迹地图",
+		label: "旅行与地点记录",
+		href: "/life/places/",
+		icon: "material-symbols:location-on-outline",
+		count: places.length,
+		tone: "violet",
+	},
+	{
+		title: "更新日志",
+		label: "版本记录",
+		href: "/changelog/",
+		icon: "material-symbols:history-edu-outline",
+		tone: "slate",
+	},
+];
+---
+
+<Layout title={title} description={description}>
+	<main class="admin-page">
+		<AdminDashboard modules={modules as any} metrics={metrics} client:only="svelte" />
+	</main>
+</Layout>
+
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" async></script>
+
+<style>
+	:global(body) {
+		overflow-x: hidden;
+	}
+
+	:global(#page-loader),
+	:global(.top-gradient-highlight) {
+		display: none !important;
+	}
+
+	.admin-page {
+		width: min(100% - 2rem, 1440px);
+		margin: 1rem auto;
+		min-height: calc(100vh - 2rem);
+	}
+
+	@media (max-width: 768px) {
+		.admin-page {
+			width: min(100% - 1rem, 1440px);
+			margin: 0.5rem auto;
+			min-height: calc(100vh - 1rem);
+		}
+	}
+</style>

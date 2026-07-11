@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import { profileConfig } from "@/config/profileConfig";
+import { getTagList } from "@/utils/content-utils";
+import { url } from "@/utils/url-utils";
+
+const posts = await getCollection("posts", ({ data }) => {
+	return import.meta.env.PROD ? data.draft !== true : true;
+});
+const tags = await getTagList();
+const moments = await getCollection("moments");
+
+const stats = [
+	{ label: "文章", count: posts.length },
+	{ label: "标签", count: tags.length },
+	{ label: "动态", count: moments.length },
+];
+
+const aboutLink = url("/about/");
+---
+
+<div class="card-base p-4">
+  <div class="flex flex-col items-center">
+    <!-- Avatar (Circular) -->
+    <a 
+      aria-label="Go to About Page" 
+      href={url("/about/")}
+      class="group relative block w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-white dark:border-neutral-800 shadow-lg active:scale-95 transition-all"
+    >
+      <div class="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/30 transition-opacity pointer-events-none">
+        <Icon name="material-symbols:account-circle" class="text-white text-3xl" />
+      </div>
+      <ImageWrapper
+        src={profileConfig.avatar || ""}
+        alt="Profile Image"
+        class="w-full h-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+        widths={[150]}
+        sizes="150px"
+      />
+    </a>
+
+    <!-- Name and Bio -->
+    <div class="text-center mb-1">
+      <div class="font-bold text-xl text-neutral-800 dark:text-neutral-100 mb-0.5">
+        {profileConfig.name}
+      </div>
+      <div class="text-sm text-neutral-500 dark:text-neutral-400">
+        {Array.isArray(profileConfig.bio) ? profileConfig.bio[1] || profileConfig.bio[0] : profileConfig.bio}
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="flex w-full justify-around py-4 border-y border-neutral-100 dark:border-neutral-800 my-4">
+      {stats.map(stat => (
+        <div class="flex flex-col items-center">
+          <div class="text-xs text-neutral-500 dark:text-neutral-400 mb-1">{stat.label}</div>
+          <div class="text-lg font-bold text-neutral-800 dark:text-neutral-100 leading-none">{stat.count}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Main Button -->
+    <a 
+      href={aboutLink}
+      class="btn-regular w-full py-2.5 rounded-xl bg-(--primary) text-white dark:text-neutral-900 font-bold flex items-center justify-center gap-2 mb-4 hover:scale-[0.98] active:scale-95 transition-all"
+    >
+      <Icon name="material-symbols:account-circle" class="text-xl" />
+      关于我
+    </a>
+
+    <!-- Social Icons -->
+    <div class="flex flex-wrap gap-4 justify-center">
+      {profileConfig.links.map(item => (
+        <a 
+          rel="me" 
+          aria-label={item.name} 
+          href={item.url} 
+          target={item.url.startsWith("mailto:") ? "_self" : "_blank"}
+          class="text-neutral-500 hover:text-(--primary) transition-colors transform hover:scale-110 active:scale-90"
+        >
+          <Icon name={item.icon} class="text-[1.3rem]"></Icon>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>

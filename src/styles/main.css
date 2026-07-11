@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Firefly 主样式入口
+   CSS Cascade Layers: reset → tokens → base → components → utilities → overrides
+   ========================================================================== */
+
+/* --- Tailwind v4 核心 --- */
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+/* 暗色模式选择器配置 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 主题配置 */
+@theme {
+  --font-sans:
+    'Roboto', 'sans-serif', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* --- 自定义工具类 --- */
+@import './base/utilities.css';
+
+/* --- 设计令牌 --- */
+@import './tokens/colors.css';
+@import './tokens/breakpoints.css';
+@import './tokens/animation.css';
+@import './tokens/z-index.css';
+
+/* --- 基础重置 --- */
+@import './base/reset.css';
+
+/* --- 组件样式 --- */
+@import './components/theme-transition.css';
+@import './components/cards.css';
+@import './components/buttons.css';
+@import './components/links.css';
+@import './components/dropdown.css';
+@import './components/pagination.css';
+@import './components/floating-dock.css';
+@import './components/post-list.css';
+@import './components/home-hero.css';
+@import './components/home-ticker.css';
+@import './components/home-data-layer.css';
+@import './components/home-portfolio-shutter.css';
+@import './components/page-loader.css';
+
+/* --- 功能样式 --- */
+@import './features/content.css';
+@import './features/misc.css';
+@import './features/markdown.css';
+@import './features/markdown-extend.css';
+@import './features/toc.css';
+@import './features/scrollbar.css';
+@import './features/custom-scrollbar.css';
+@import './features/widget-responsive.css';
+@import './features/portal.css';
+@import './features/moments.css';
+@import './features/movies-games.css';
+@import './pages/music-visualizer.css';
+
+/* --- 布局样式 --- */
+@import './layout/layout-styles.css';
+@import './layout/navbar.css';
+@import './layout/banner-title.css';
+@import './layout/waves.css';
+
+/* --- 过渡动画 --- */
+@import './transitions/swup.css';
+
+/* --- 第三方覆盖 --- */
+@import './vendor/expressive-code.css';
+@import './vendor/fancybox.css';
+@import './vendor/waline.css';
+@import './vendor/twikoo.css';
+@import './vendor/photoswipe.css';

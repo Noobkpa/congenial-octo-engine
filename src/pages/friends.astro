@@ -1,0 +1,248 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import Comment from "@components/comment/index.astro";
+import Markdown from "@components/common/Markdown.astro";
+import { Icon } from "astro-icon/components";
+import FriendCard from "@components/features/FriendCard.astro";
+import FriendRulesModal from "@components/features/FriendRulesModal.astro";
+import { friendsPageConfig } from "@/config";
+import FriendsEditor from "@/components/edit/FriendsEditor.svelte";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const friendsPost = await getEntry("spec", "friends");
+
+if (!friendsPost) {
+	throw new Error("friends page content not found");
+}
+
+const { Content } = await render(friendsPost);
+
+// 从 content/friends 目录读取友链数据，按权重排序
+const friendsEntries = await getCollection("friends");
+const items = friendsEntries
+	.filter((item) => item.data.enabled !== false)
+	.sort((a, b) => (b.data.weight || 0) - (a.data.weight || 0));
+
+const allTags = [
+	...new Set(items.flatMap((item) => item.data.tags || [])),
+].sort();
+
+// 页面标题和描述
+const title = i18n(I18nKey.friends);
+const description = i18n(I18nKey.friendsDescription);
+---
+
+<MainGridLayout title={title} description={description}>
+  <div
+    class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
+  >
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <!-- 页面标题和描述 -->
+      <div class="mb-4 flex justify-between items-start gap-4 flex-wrap">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-3 mb-3">
+            <div
+              class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-white dark:text-black/70"
+            >
+              <Icon name="material-symbols:group" class="text-[1.5rem]" />
+            </div>
+            <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+              {title}
+            </h1>
+          </div>
+          {
+            description && (
+              <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+                {description}
+              </p>
+            )
+          }
+        </div>
+        <div class="page-header-toolbar-slot flex-shrink-0 flex items-center gap-2 flex-wrap">
+          {friendsPageConfig.applyLink && (
+            <button
+              data-open-friend-rules
+              class="edit-main-btn-style rounded-lg border border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-900 hover:text-neutral-100 dark:hover:bg-neutral-100 dark:hover:text-neutral-900 transition-colors duration-200 font-medium flex items-center gap-1.5 cursor-pointer"
+              style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.9);background:transparent;color:rgba(0,0,0,0.9);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;line-height:1;height:32px;box-sizing:border-box;"
+            >
+              <Icon name="material-symbols:help-outline-rounded" class="text-base" />
+              如何申请友链
+            </button>
+          )}
+        </div>
+      </div>
+
+      <!-- 友链编辑器 -->
+      <div data-no-swup>
+        <FriendsEditor client:only />
+      </div>
+
+      <!-- 标签筛选 -->
+      {
+        items.length > 0 && (
+          <friend-filter class="flex flex-wrap gap-2 mb-6">
+            <button
+              data-tag="all"
+              class="btn-regular px-3 py-1.5 rounded-lg bg-(--primary) text-white dark:text-neutral-900 hover:bg-(--primary) transition-colors duration-200 text-sm font-medium"
+            >
+              {i18n(I18nKey.all)}
+            </button>
+            {allTags.map((tag) => (
+              <button
+                data-tag={tag}
+                class="btn-regular px-3 py-1.5 rounded-lg bg-(--btn-regular-bg) text-(--btn-content) hover:bg-(--btn-regular-bg-hover) transition-colors duration-200 text-sm font-medium"
+              >
+                {tag}
+              </button>
+            ))}
+          </friend-filter>
+        )
+      }
+
+      <!-- 友链网格 -->
+      <div class="friends-grid" id="friends-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+        {
+          items.map((item) => (
+            <div class="friend-card" data-friend-id={item.id || item.data.siteurl} data-tags={item.data.tags?.join(",")}>
+              <FriendCard
+                title={item.data.title}
+                href={item.data.siteurl}
+                imgurl={item.data.imgurl}
+                desc={item.data.desc}
+                tags={item.data.tags}
+              />
+            </div>
+          ))
+        }
+        </div>
+      </div>
+
+      <Markdown class="mt-2">
+        <Content />
+      </Markdown>
+    </div>
+  </div>
+
+  <!-- 评论区 -->
+  <div class="mt-4">
+    <Comment post={friendsPost} customPath="/friends/" />
+  </div>
+
+  <!-- 友链申请指南弹窗 -->
+  <FriendRulesModal applyLink={friendsPageConfig.applyLink} />
+
+  <script slot="head" is:inline>
+    if (!customElements.get("friend-filter")) {
+      class FriendFilter extends HTMLElement {
+        constructor() {
+          super();
+        }
+
+        connectedCallback() {
+          this.addEventListener("click", this.handleClick);
+        }
+
+        disconnectedCallback() {
+          this.removeEventListener("click", this.handleClick);
+        }
+
+        handleClick(e) {
+          const target = e.target;
+          const button = target.closest("button");
+          if (!button) return;
+
+          const selectedTag = button.dataset.tag;
+          const filters = this.querySelectorAll("button");
+          const container = this.closest(".card-base");
+          if (!container) return;
+
+          const cards = container.querySelectorAll(".friend-card");
+
+          filters.forEach((f) => {
+            f.classList.remove("bg-(--primary)", "text-white", "dark:text-neutral-900");
+            f.classList.remove("hover:bg-(--primary)");
+            f.classList.add(
+              "bg-(--btn-regular-bg)",
+              "text-(--btn-content)"
+            );
+            f.classList.add("hover:bg-(--btn-regular-bg-hover)");
+
+            if (f === button) {
+              f.classList.remove(
+                "bg-(--btn-regular-bg)",
+                "text-(--btn-content)"
+              );
+              f.classList.remove("hover:bg-(--btn-regular-bg-hover)");
+              f.classList.add("bg-(--primary)", "text-white", "dark:text-neutral-900");
+              f.classList.add("hover:bg-(--primary)");
+            }
+          });
+
+          cards.forEach((card) => {
+            const cardEl = card;
+            const tags = (cardEl.dataset.tags || "").split(",");
+            if (
+              selectedTag === "all" ||
+              (selectedTag && tags.includes(selectedTag))
+            ) {
+              cardEl.style.display = "";
+              cardEl.classList.add("animate-fade-in-up");
+            } else {
+              cardEl.style.display = "none";
+              cardEl.classList.remove("animate-fade-in-up");
+            }
+          });
+        }
+      }
+      customElements.define("friend-filter", FriendFilter);
+    }
+  </script>
+
+  <style>
+    .edit-main-btn-style {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 6px 12px !important;
+      border-radius: 8px !important;
+      border: 1px solid rgba(0, 0, 0, 0.9) !important;
+      background: transparent !important;
+      color: rgba(0, 0, 0, 0.9) !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      cursor: pointer !important;
+      transition: background-color 0.2s, color 0.2s !important;
+      white-space: nowrap !important;
+      line-height: 1 !important;
+      height: 32px !important;
+      box-sizing: border-box !important;
+    }
+
+    .edit-main-btn-style:hover {
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+    }
+
+    :global(.dark) .edit-main-btn-style {
+      border-color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    :global(.dark) .edit-main-btn-style:hover {
+      background: rgba(255, 255, 255, 0.9);
+      color: rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 768px) {
+      :has(> .page-header-toolbar-slot) {
+        flex-direction: column;
+      }
+      .page-header-toolbar-slot {
+        width: 100%;
+      }
+    }
+  </style>
+  </MainGridLayout>

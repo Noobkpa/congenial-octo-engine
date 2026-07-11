@@ -1,0 +1,28 @@
+---
+import AdminLogin from "@/components/admin/AdminLogin.svelte";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "后台登录";
+const description = "登录后台管理系统";
+---
+
+<Layout title={title} description={description}>
+	<main class="login-page">
+		<AdminLogin client:only="svelte" />
+	</main>
+</Layout>
+
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" async></script>
+
+<style>
+	:global(#page-loader),
+	:global(.top-gradient-highlight) {
+		display: none !important;
+	}
+
+	.login-page {
+		width: min(100% - 2rem, 1440px);
+		margin: 1rem auto;
+		min-height: calc(100vh - 2rem);
+	}
+</style>
