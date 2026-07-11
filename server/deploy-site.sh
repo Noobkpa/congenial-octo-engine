@@ -52,7 +52,12 @@ export PUBLIC_GITHUB_APP_ID="${GITHUB_APP_ID}"
 export PUBLIC_GITHUB_OWNER="${REPOSITORY%%/*}"
 export PUBLIC_GITHUB_REPO="${REPOSITORY##*/}"
 export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=1400}"
-pnpm install --frozen-lockfile --prefer-offline
+if [[ -x /root/firefly-build/node_modules/.bin/astro ]]; then
+	cp -al /root/firefly-build/node_modules "${BUILD_DIR}/node_modules"
+	pnpm install --frozen-lockfile --offline
+else
+	pnpm install --frozen-lockfile --prefer-offline
+fi
 pnpm build
 test -f "${BUILD_DIR}/dist/index.html"
 test -f "${BUILD_DIR}/dist/admin/index.html"
