@@ -26,7 +26,10 @@ const visitedPlaces = lifeEntries
 	.filter((entry) => !entry.id.toLowerCase().includes("readme"))
 	.map((entry) => ({
 		...entry.data,
-		slug: entry.id.replace(/\\/g, "/").replace(/\.mdx?$/i, ""),
+		slug: entry.id
+			.replace(/\\/g, "/")
+			.replace(/^places\//i, "")
+			.replace(/\.mdx?$/i, ""),
 	}));
 
 const sortedPlaces = [...visitedPlaces].sort((a, b) => {
