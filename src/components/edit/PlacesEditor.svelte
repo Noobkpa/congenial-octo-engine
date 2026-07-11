@@ -130,6 +130,7 @@ function handleSidebarAdd(e: Event) {
 
 function collectFromDOM() {
 	const result: PlaceItem[] = [];
+	const seenSlugs = new Set<string>();
 	document.querySelectorAll(".place-card").forEach((card) => {
 		const nameEl = card.querySelector(".place-name");
 		const nameText = nameEl?.textContent?.trim() || "";
@@ -147,6 +148,8 @@ function collectFromDOM() {
 		const date = dateText || new Date().toISOString().slice(0, 10);
 		// Keep the source filename from SSR so update/delete operations address the real file.
 		const slug = card.getAttribute("data-place-slug") || `${date}-${genId("pl").slice(-4)}`;
+		if (seenSlugs.has(slug)) return;
+		seenSlugs.add(slug);
 		result.push({
 			id: genId("pl"),
 			slug,
