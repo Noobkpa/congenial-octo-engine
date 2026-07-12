@@ -1570,12 +1570,15 @@ const huePreviewColor = $derived(getState()?.config?.themeColor?.hue !== undefin
 <style>
 	.config-tabs {
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		gap: 6px;
 		margin-bottom: 12px;
 		padding: 6px;
 		background: var(--bg-secondary, rgba(0,0,0,0.03));
 		border-radius: 12px;
+		overflow-x: auto;
+		scrollbar-width: thin;
+		overscroll-behavior-x: contain;
 	}
 	:global(.dark) .config-tabs {
 		background: rgba(255,255,255,0.04);
@@ -1595,6 +1598,7 @@ const huePreviewColor = $derived(getState()?.config?.themeColor?.hue !== undefin
 		background: transparent;
 		color: var(--text-secondary, #6b7280);
 		white-space: nowrap;
+		flex: 0 0 auto;
 	}
 	.config-tab:hover {
 		background: var(--btn-plain-bg-hover, rgba(0,0,0,0.06));
@@ -1616,6 +1620,7 @@ const huePreviewColor = $derived(getState()?.config?.themeColor?.hue !== undefin
 		gap: 8px;
 		margin-bottom: 12px;
 		flex-wrap: wrap;
+		min-height: 36px;
 	}
 
 	.code-toggle-btn {
@@ -1698,7 +1703,7 @@ const huePreviewColor = $derived(getState()?.config?.themeColor?.hue !== undefin
 
 	.form-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
 		gap: 14px;
 	}
 	.form-group-full {
@@ -1927,5 +1932,40 @@ const huePreviewColor = $derived(getState()?.config?.themeColor?.hue !== undefin
 	.code-textarea:focus {
 		border-color: hsl(var(--theme-hue, 230), 70%, 50%);
 		box-shadow: 0 0 0 2px hsla(var(--theme-hue, 230), 70%, 50%, 0.1);
+	}
+
+	@media (max-width: 768px) {
+		.config-tabs {
+			margin-left: -4px;
+			margin-right: -4px;
+			padding: 5px;
+		}
+
+		.config-tab {
+			padding: 8px 11px;
+			font-size: 12px;
+		}
+
+		.config-edit-toolbar {
+			justify-content: stretch;
+			margin-bottom: 10px;
+		}
+
+		.config-card-body {
+			padding: 15px;
+		}
+
+		.form-grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 12px;
+		}
+
+		.form-group-full {
+			grid-column: auto;
+		}
+
+		.form-check-label {
+			margin-top: 4px;
+		}
 	}
 </style>
