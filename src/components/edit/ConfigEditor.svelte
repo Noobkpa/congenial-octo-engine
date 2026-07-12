@@ -239,9 +239,7 @@ function generateCode(key: string, config: any): string {
 	const json = JSON.stringify(config, null, 2);
 	return `// ${name} 配置文件
 // 由可视化编辑器生成
-const ${name} = ${json};
-
-export default ${name};
+export const ${name} = ${json};
 `;
 }
 
