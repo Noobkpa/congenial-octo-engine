@@ -79,7 +79,11 @@ function initTabState(key: string, tab: ConfigTab, initialConfig: FullConfig) {
 		pageName: tab.pageName,
 		getContent: () => (codeMode ? state.codeContent : generateCode(key, state.config)),
 		setContent: (v: string) => {
-			state.codeContent = v;
+			// 兼容修复前生成的 export default 草稿，避免旧草稿阻塞提交。
+			const name = getConfigName(key);
+			state.codeContent = v
+				.replace(new RegExp(`(^|\\n)const ${name}\\s*=`, "m"), `$1export const ${name} =`)
+				.replace(new RegExp(`\\nexport default ${name};?\\s*$`), "\n");
 			codeMode = true;
 		},
 		getPath: () => tab.path,
@@ -226,6 +230,15 @@ function updatePageField(key: string, value: boolean) {
 }
 
 function generateCode(key: string, config: any): string {
+	const name = getConfigName(key);
+	const json = JSON.stringify(config, null, 2);
+	return `// ${name} 配置文件
+// 由可视化编辑器生成
+export const ${name} = ${json};
+`;
+}
+
+function getConfigName(key: string): string {
 	const names: Record<string, string> = {
 		site: "siteConfig",
 		sidebar: "sidebarConfig",
@@ -235,12 +248,7 @@ function generateCode(key: string, config: any): string {
 		relationship: "relationshipConfig",
 		announcement: "announcementConfig",
 	};
-	const name = names[key] || "config";
-	const json = JSON.stringify(config, null, 2);
-	return `// ${name} 配置文件
-// 由可视化编辑器生成
-export const ${name} = ${json};
-`;
+	return names[key] || "config";
 }
 
 function toggleCodeMode() {
