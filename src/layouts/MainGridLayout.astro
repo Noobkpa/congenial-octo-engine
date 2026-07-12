@@ -609,6 +609,7 @@ const mobileQuality = Math.round(configQuality * 0.9);
           data-sidebar-position={sidebarLayoutConfig.position}
           data-tablet-sidebar={sidebarLayoutConfig.tabletSidebar ?? "left"}
           data-show-both-sidebars-on-post={sidebarLayoutConfig.showBothSidebarsOnPostPage ? "true" : "false"}
+          data-hide-sidebar={hideSidebar ? "true" : "false"}
         >
             <!-- 网站浏览量 -->
             {hasBannerCredit && (creditEnabledOnDesktop || creditEnabledOnMobile) && isHomePageCheck && <div

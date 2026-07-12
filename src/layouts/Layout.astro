@@ -1238,6 +1238,15 @@ function disableAnimation() {
     const mainGrid = document.getElementById("main-grid");
     if (!mainGrid) return;
 
+    // Pages that explicitly hide sidebars (for example /config/) must stay full-width.
+    if (mainGrid.getAttribute("data-hide-sidebar") === "true") {
+      ["grid-cols-1", "md:grid-cols-[17.5rem_1fr]", "md:grid-cols-[1fr_17.5rem]", "xl:grid-cols-[17.5rem_1fr_17.5rem]"].forEach(
+        cls => mainGrid.classList.remove(cls)
+      );
+      mainGrid.classList.add("grid-cols-1");
+      return;
+    }
+
     const isPostPage = isCurrentPagePost();
     const sidebarPosition = mainGrid.getAttribute("data-sidebar-position") || "left";
     const tabletSidebar = mainGrid.getAttribute("data-tablet-sidebar") || "left";
