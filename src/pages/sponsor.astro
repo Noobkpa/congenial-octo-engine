@@ -107,7 +107,10 @@ const showSponsorsList = sponsorConfig.showSponsorsList !== false;
                       src={url(method.qrCode)}
                       alt={`${method.name} 扫码赞助`}
                       class="sponsor-qr-img"
-                      loading="lazy"
+                      width="240"
+                      height="240"
+                      loading="eager"
+                      decoding="async"
                     />
                   </div>
                   {method.description && (
@@ -538,4 +541,3 @@ const showSponsorsList = sponsorConfig.showSponsorsList !== false;
     });
   })();
 </script>
-
