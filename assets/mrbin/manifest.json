@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-07-11T15:02:49.792Z",
+  "posts": [
+    {
+      "id": "245",
+      "title": "上天会一直出同一道题给你，直到你做出改变",
+      "file": "src/content/posts/mrbin/2026-05-04-245.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-245-01.jpg"
+    },
+    {
+      "id": "238",
+      "title": "终于！！！EI会议接收！！！",
+      "file": "src/content/posts/mrbin/2026-03-17-238.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-238-01.png"
+    },
+    {
+      "id": "230",
+      "title": "恭喜T1六冠",
+      "file": "src/content/posts/mrbin/2025-11-09-230.md",
+      "assets": 2,
+      "image": "/assets/mrbin/uploads/post-230-02.jpg"
+    },
+    {
+      "id": "225",
+      "title": "论当代NTR题材的失格",
+      "file": "src/content/posts/mrbin/2025-07-23-225.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-225-01.jpg"
+    },
+    {
+      "id": "219",
+      "title": "长大之后越来越明白一件事",
+      "file": "src/content/posts/mrbin/2025-07-01-219.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-219-01.jpg"
+    },
+    {
+      "id": "214",
+      "title": "论为什么关注度很高的高考作文其实是很无聊的一个东西",
+      "file": "src/content/posts/mrbin/2025-06-11-214.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-214-01.jpg"
+    },
+    {
+      "id": "211",
+      "title": "关于＂性压抑＂",
+      "file": "src/content/posts/mrbin/2025-04-23-211.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-211-01.jpg"
+    },
+    {
+      "id": "208",
+      "title": "浮生梦",
+      "file": "src/content/posts/mrbin/2025-03-08-208.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-208-01.webp"
+    },
+    {
+      "id": "206",
+      "title": "因此，我们离开",
+      "file": "src/content/posts/mrbin/2025-02-26-206.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-206-01.jpg"
+    },
+    {
+      "id": "196",
+      "title": "谈谈炒作带来神奇的权威性，与权相同威力的神药",
+      "file": "src/content/posts/mrbin/2024-12-17-196.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-196-01.jpg"
+    },
+    {
+      "id": "190",
+      "title": "饿殍：明末千里行",
+      "file": "src/content/posts/mrbin/2024-12-14-190.md",
+      "assets": 0,
+      "image": ""
+    },
+    {
+      "id": "183",
+      "title": "尼玛的终于修好网站了！！！！！！！",
+      "file": "src/content/posts/mrbin/2024-12-14-183.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-183-01.jpg"
+    },
+    {
+      "id": "146",
+      "title": "コイバナ恋愛：可攻略与否并不是最重要的问题",
+      "file": "src/content/posts/mrbin/2024-03-03-146.md",
+      "assets": 6,
+      "image": "/assets/mrbin/uploads/post-146-06.jpg"
+    },
+    {
+      "id": "142",
+      "title": "Leetcode 27:移除元素——使用双指针进行查找",
+      "file": "src/content/posts/mrbin/2024-02-10-142.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-142-01.jpeg"
+    },
+    {
+      "id": "140",
+      "title": "Leetcode 2535:数组元素和与数字和的绝对差——一道练习数位求和的好题",
+      "file": "src/content/posts/mrbin/2024-02-10-140.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-140-01.jpeg"
+    },
+    {
+      "id": "135",
+      "title": "Leetcode 2057:值相等的最小索引——论我和大佬的差距（2）",
+      "file": "src/content/posts/mrbin/2024-02-09-135.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-135-01.jpeg"
+    },
+    {
+      "id": "129",
+      "title": "LCP 06:拿硬币——论我和力扣大佬的区别",
+      "file": "src/content/posts/mrbin/2024-02-09-129.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-129-01.jpeg"
+    },
+    {
+      "id": "119",
+      "title": "Leetcode01:两数之和——使用哈希表进行快速查找",
+      "file": "src/content/posts/mrbin/2024-02-04-119.md",
+      "assets": 3,
+      "image": "/assets/mrbin/uploads/post-119-03.jpeg"
+    },
+    {
+      "id": "105",
+      "title": "数据结构：使用C++实现二叉树的遍历和线索化",
+      "file": "src/content/posts/mrbin/2024-01-28-105.md",
+      "assets": 3,
+      "image": "/assets/mrbin/uploads/post-105-03.png"
+    },
+    {
+      "id": "90",
+      "title": "数据结构：使用C++实现二叉树的深度优先搜索和广度优先搜索",
+      "file": "src/content/posts/mrbin/2024-01-25-90.md",
+      "assets": 4,
+      "image": "/assets/mrbin/uploads/post-90-04.png"
+    },
+    {
+      "id": "86",
+      "title": "什么是程序员",
+      "file": "src/content/posts/mrbin/2024-01-19-86.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-86-01.jpg"
+    },
+    {
+      "id": "58",
+      "title": "闲暇之余写篇文章",
+      "file": "src/content/posts/mrbin/2023-11-29-58.md",
+      "assets": 1,
+      "image": "/assets/mrbin/uploads/post-58-01.jpg"
+    },
+    {
+      "id": "48",
+      "title": "迟来的祝李哥四冠",
+      "file": "src/content/posts/mrbin/2023-11-22-48.md",
+      "assets": 3,
+      "image": "/assets/mrbin/uploads/post-48-03.png"
+    },
+    {
+      "id": "18",
+      "title": "总算正常了",
+      "file": "src/content/posts/mrbin/2023-11-18-18.md",
+      "assets": 2,
+      "image": "/assets/mrbin/uploads/post-18-02.jpg"
+    },
+    {
+      "id": "15",
+      "title": "使用正则表达式和文件操作爬取并保存“某吧”某帖子全部内容（该帖不少于5页)",
+      "file": "src/content/posts/mrbin/2023-11-18-15.md",
+      "assets": 2,
+      "image": "/assets/mrbin/uploads/post-15-02.webp"
+    }
+  ]
+}

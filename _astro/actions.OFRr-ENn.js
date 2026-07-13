@@ -1,0 +1,1 @@
+import{Y as a,O as r,P as s,_ as t,$ as e}from"./utils.Du9uywWO.js";function o(o,i,u){a(()=>{var a=r(()=>i(o,u?.())||{});if(u&&a?.update){var d=!1,f={};s(()=>{var r=u();t(r),d&&e(f,r)&&(f=r,a.update(r))}),d=!0}if(a?.destroy)return()=>a.destroy()})}export{o as a};

@@ -1,0 +1,1 @@
+import{Y as r,P as n,O as s,D as t,Z as u}from"./utils.Du9uywWO.js";function a(r,n){return r===n||r?.[u]===n}function l(u={},l,o,e){return r(()=>{var r,e;return n(()=>{r=e,e=[],s(()=>{u!==o(...e)&&(l(u,...e),r&&a(o(...r),u)&&l(null,...r))})}),()=>{t(()=>{e&&a(o(...e),u)&&l(null,...e)})}}),u}export{l as b};
