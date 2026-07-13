@@ -144,11 +144,16 @@ const clientSortedPlaces = sortedPlaces.map((p) => ({
   function loadECharts() {
     return new Promise(function(resolve, reject) {
       if (window.echarts) { resolve(window.echarts); return; }
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js';
-      script.onload = function() { resolve(window.echarts); };
-      script.onerror = function() { reject(new Error('ECharts load failed')); };
-      document.head.appendChild(script);
+      var sources = ['/echarts.min.js', 'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'];
+      var load = function(index) {
+        if (index >= sources.length) { reject(new Error('ECharts load failed')); return; }
+        var script = document.createElement('script');
+        script.src = sources[index];
+        script.onload = function() { resolve(window.echarts); };
+        script.onerror = function() { script.remove(); load(index + 1); };
+        document.head.appendChild(script);
+      };
+      load(0);
     });
   }
 
